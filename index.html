@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jennie Black Tarot</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:wght@300;400;600&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    :root {
+      --bg-dark: #0a0a0f;
+      --bg-card: #1a1a2e;
+      --text-primary: #f5f5f5;
+      --text-secondary: #b8b8c0;
+      --accent-gold: #d4af37;
+      --accent-purple: #8b5cf6;
+      --shadow: rgba(0, 0, 0, 0.5);
+    }
+    
+    body {
+      font-family: 'Cormorant Garamond', serif;
+      background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        radial-gradient(circle at 20% 30%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 3s infinite;
+    }
+    
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+    
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 60px 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 80px;
+      animation: fadeInDown 1s ease-out;
+    }
+    
+    .logo {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 30px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-purple), var(--accent-gold));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      box-shadow: 0 20px 60px rgba(139, 92, 246, 0.4);
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 4.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent-gold), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 15px;
+      letter-spacing: 4px;
+    }
+    
+    .subtitle {
+      font-size: 1.5rem;
+      color: var(--text-secondary);
+      font-weight: 300;
+      letter-spacing: 3px;
+      margin-bottom: 10px;
+    }
+    
+    .tagline {
+      font-size: 1.1rem;
+      color: var(--accent-gold);
+      font-style: italic;
+      margin-top: 20px;
+    }
+    
+    .sections-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 40px;
+      width: 100%;
+      max-width: 1200px;
+      margin-top: 20px;
+    }
+    
+    .section-card {
+      background: rgba(26, 26, 46, 0.8);
+      border: 2px solid transparent;
+      border-radius: 25px;
+      padding: 50px 40px;
+      cursor: pointer;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      animation: fadeInUp 0.8s ease-out backwards;
+      text-decoration: none;
+      display: block;
+    }
+    
+    .section-card:nth-child(1) { animation-delay: 0.2s; }
+    .section-card:nth-child(2) { animation-delay: 0.4s; }
+    .section-card:nth-child(3) { animation-delay: 0.6s; }
+    
+    .section-card::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(135deg, var(--section-color-1), var(--section-color-2));
+      border-radius: 25px;
+      opacity: 0;
+      transition: opacity 0.5s;
+      z-index: -1;
+    }
+    
+    .section-card:hover::before {
+      opacity: 1;
+    }
+    
+    .section-card:hover {
+      transform: translateY(-15px) scale(1.03);
+      box-shadow: 0 30px 60px var(--shadow);
+    }
+    
+    .section-card.coming-soon {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    
+    .section-card.coming-soon:hover {
+      transform: none;
+      box-shadow: none;
+    }
+    
+    .section-card.coming-soon::before {
+      opacity: 0.3;
+    }
+    
+    .section-icon {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 25px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, var(--section-color-1), var(--section-color-2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+      transition: all 0.5s;
+    }
+    
+    .section-card:hover .section-icon {
+      transform: rotateY(360deg);
+    }
+    
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: 2.2rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      text-align: center;
+      color: var(--text-primary);
+    }
+    
+    .section-description {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      text-align: center;
+      line-height: 1.8;
+      margin-bottom: 25px;
+    }
+    
+    .section-features {
+      list-style: none;
+      margin-top: 25px;
+      padding-top: 25px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+    
+    .feature-icon {
+      color: var(--section-color-1);
+      font-size: 1.3rem;
+    }
+    
+    .coming-soon-badge {
+      display: inline-block;
+      background: rgba(139, 92, 246, 0.3);
+      color: var(--accent-purple);
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      margin-top: 20px;
+    }
+    
+    /* Section specific colors */
+    .ebook { --section-color-1: #ec4899; --section-color-2: #f97316; }
+    .consultation { --section-color-1: #8b5cf6; --section-color-2: #d4af37; }
+    .shop { --section-color-1: #10b981; --section-color-2: #06b6d4; }
+    
+    footer {
+      margin-top: 80px;
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      animation: fadeIn 2s ease-out;
+    }
+    
+    footer p {
+      margin: 5px 0;
+    }
+    
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 3rem;
+      }
+      
+      .subtitle {
+        font-size: 1.2rem;
+      }
+      
+      .sections-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      
+      .section-card {
+        padding: 40px 30px;
+      }
+      
+      .section-title {
+        font-size: 1.8rem;
+      }
+      
+      .logo {
+        width: 100px;
+        height: 100px;
+        font-size: 3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars" id="stars"></div>
+  
+  <div class="container">
+    <header>
+      <div class="logo">🔮</div>
+      <h1>Jennie Black Tarot</h1>
+      <p class="subtitle">제니블랙 타로</p>
+      <p class="tagline">"당신의 운명을 읽는 신비로운 여정"</p>
+    </header>
+    
+    <div class="sections-grid">
+      <!-- 전자책 섹션 -->
+      <div class="section-card ebook coming-soon">
+        <div class="section-icon">📖</div>
+        <h2 class="section-title">제니타로 전자책</h2>
+        <p class="section-description">
+          타로의 모든 것을 담은 완벽한 가이드북
+        </p>
+        <ul class="section-features">
+          <li class="feature-item">
+            <span class="feature-icon">✨</span>
+            <span>78장 타로카드 완벽 해설</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon">📚</span>
+            <span>초보자부터 전문가까지</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon">🎯</span>
+            <span>실전 리딩 기법</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon">💎</span>
+            <span>제니블랙만의 노하우</span>
+          </li>
+        </ul>
+        <span class="coming-soon-badge">COMING SOON</span>
+      </div>
+      
+      <!-- 상담 섹션 (활성화) -->
+      <a href="tarot-mystics.html" class="section-card consultation">
+        <div class="section-icon">🌙</div>
+        <h2 class="section-title">제니타로 상담</h2>
+        <p class="section-description">
+          전문 타로 마스터의 AI 기반 실시간 리딩
+        </p>
+        <ul class="section-features">
+          <li class="feature-item">
+            <span class="feature-icon">🆓</span>
+            <span>무료 체험 가능</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon">💬</span>
+            <span>5가지 타로 마스터 선택</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon">⚡</span>
+            <span>즉시 해석 제공</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon">👑</span>
+            <span>VIP 실시간 1:1 상담</span>
+          </li>
+        </ul>
+      </a>
+      
+      <!-- 상점 섹션 -->
+      <div class="section-card shop coming-soon">
+        <div class="section-icon">🛍️</div>
+        <h2 class="section-title">제니타로 상점</h2>
+        <p class="section-description">
+          엄선된 타로 관련 제품과 굿즈
+        </p>
+        <ul class="section-features">
+          <li class="feature-item">
+            <span class="feature-icon">🎴</span>
+            <span>프리미엄 타로카드 덱</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon">🕯️</span>
+            <span>명상 & 의식 용품</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon">💎</span>
+            <span>크리스탈 & 파워스톤</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon">✨</span>
+            <span>제니블랙 굿즈</span>
+          </li>
+        </ul>
+        <span class="coming-soon-badge">COMING SOON</span>
+      </div>
+    </div>
+    
+    <footer>
+      <p>&copy; 2026 Jennie Black Tarot. All rights reserved.</p>
+      <p>제니블랙 타로 - 당신의 운명을 읽는 신비로운 여정</p>
+    </footer>
+  </div>
+  
+  <script>
+    // Generate stars
+    const starsContainer = document.getElementById('stars');
+    for (let i = 0; i < 150; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.animationDelay = Math.random() * 3 + 's';
+      starsContainer.appendChild(star);
+    }
+    
+    // Coming Soon 클릭 방지
+    document.querySelectorAll('.coming-soon').forEach(card => {
+      card.addEventListener('click', (e) => {
+        e.preventDefault();
+        alert('🔮 곧 공개될 예정입니다!\n조금만 기다려주세요.');
+      });
+    });
+  </script>
+</body>
+</html>
