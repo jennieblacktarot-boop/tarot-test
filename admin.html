@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
-<head>
+<html lang="ko"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>관리자 페이지 - Jennie Black Tarot</title>
@@ -482,7 +481,7 @@
 </head>
 <body>
   <!-- Login Screen -->
-  <div id="loginScreen" class="login-container">
+  <div id="loginScreen" class="login-container" style="display: none;">
     <div class="login-box">
       <div class="login-header">
         <div class="login-logo">🔮</div>
@@ -493,12 +492,12 @@
       <form onsubmit="login(event)">
         <div class="form-group">
           <label class="form-label">아이디</label>
-          <input type="text" class="form-input" id="username" required placeholder="admin">
+          <input type="text" class="form-input" id="username" required="" placeholder="admin">
         </div>
         
         <div class="form-group">
           <label class="form-label">비밀번호</label>
-          <input type="password" class="form-input" id="password" required placeholder="••••••••">
+          <input type="password" class="form-input" id="password" required="" placeholder="••••••••">
         </div>
         
         <button type="submit" class="login-button">로그인</button>
@@ -511,7 +510,7 @@
   </div>
   
   <!-- Admin Dashboard -->
-  <div id="adminContainer" class="admin-container">
+  <div id="adminContainer" class="admin-container active">
     <!-- Sidebar -->
     <div class="sidebar">
       <div class="sidebar-header">
@@ -1384,7 +1383,7 @@
               <div class="form-group">
                 <label class="form-label">테스트 모드</label>
                 <select class="form-input">
-                  <option value="true" selected>ON (테스트 결제)</option>
+                  <option value="true" selected="">ON (테스트 결제)</option>
                   <option value="false">OFF (실제 결제)</option>
                 </select>
                 <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 5px;">
@@ -1409,7 +1408,7 @@
               <div class="form-group">
                 <label class="form-label">사용 모델</label>
                 <select class="form-input">
-                  <option value="claude-sonnet-4-20250514" selected>Claude Sonnet 4 (권장)</option>
+                  <option value="claude-sonnet-4-20250514" selected="">Claude Sonnet 4 (권장)</option>
                   <option value="claude-opus-4-20250514">Claude Opus 4 (고품질)</option>
                   <option value="claude-haiku-4-20250301">Claude Haiku 4 (빠름)</option>
                 </select>
@@ -1443,16 +1442,16 @@
                 <label class="form-label">알림 수신 설정</label>
                 <div style="margin-top: 10px;">
                   <label style="display: block; margin-bottom: 10px; cursor: pointer;">
-                    <input type="checkbox" checked> 새로운 예약 시 알림
+                    <input type="checkbox" checked=""> 새로운 예약 시 알림
                   </label>
                   <label style="display: block; margin-bottom: 10px; cursor: pointer;">
-                    <input type="checkbox" checked> 결제 완료 시 알림
+                    <input type="checkbox" checked=""> 결제 완료 시 알림
                   </label>
                   <label style="display: block; margin-bottom: 10px; cursor: pointer;">
-                    <input type="checkbox" checked> 환불 요청 시 알림
+                    <input type="checkbox" checked=""> 환불 요청 시 알림
                   </label>
                   <label style="display: block; margin-bottom: 10px; cursor: pointer;">
-                    <input type="checkbox" checked> 고객 문의 시 알림
+                    <input type="checkbox" checked=""> 고객 문의 시 알림
                   </label>
                 </div>
               </div>
@@ -1581,5 +1580,5 @@
       // In production, this would fetch real data from backend
     }, 5000);
   </script>
-</body>
-</html>
+
+</body></html>
